@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace UnitTests
 {
-    public class ParserForCompanyCTests
+    public class ApiResponseParserForCompanyCTests
     {
         [Test]
         public void Test_WhenParsingApiResponse_IfResponseIsValid_ItWorks(
@@ -16,7 +16,7 @@ namespace UnitTests
                     @"<?xml version=""1.0"" ?> <Quote Total=""12.45"" />",
                     "<?xml version='1.0' ?> <quote total='12.45' />")] string goodResponse)
         {
-            var parsedResult = new ParserForCompanyC().Parse(goodResponse);
+            var parsedResult = new ApiResponseParserForCompanyC().Parse(goodResponse);
 
             parsedResult.Should().NotBeNull();
 
@@ -36,7 +36,7 @@ namespace UnitTests
                     @"<?xml version=""1.0"" ?> <quote total=12.45 />",
                     @"<?xml version=""1.0"" ?> <quote total=""abc"" />")] string wrongResponse)
         {
-            var parsedResult = new ParserForCompanyC().Parse(wrongResponse);
+            var parsedResult = new ApiResponseParserForCompanyC().Parse(wrongResponse);
             parsedResult.IsFailure.Should().BeTrue();
         }
     }

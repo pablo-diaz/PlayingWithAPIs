@@ -6,7 +6,7 @@ using CSharpFunctionalExtensions;
 
 namespace ApiConsumer
 {
-    public sealed class ParserForCompanyC
+    public sealed class ApiResponseParserForCompanyC
     {
         public Result<decimal> Parse(string apiResponse) =>
             string.IsNullOrEmpty(apiResponse)
