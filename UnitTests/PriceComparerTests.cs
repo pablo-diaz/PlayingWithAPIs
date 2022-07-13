@@ -29,6 +29,15 @@ namespace UnitTests
             bestPriceResult.Value.Should().Be(17.58M);
         }
 
+        [Test]
+        public async Task Test_WhenComparingPrices_IfSomeServiceDoesNotReturnTheRequiredResponse_ItFails()
+        {
+            var priceComparerService = new PriceComparer(thirdPartyServices: BuildFakeThirdPartyServicesWithWrongResultsBeingReturnedFromServices());
+            var bestPriceResult = await priceComparerService.GetBestPrice(forRequest: BuildSampleRequestInfo());
+
+            bestPriceResult.IsFailure.Should().BeTrue();
+        }
+
         private IApiRequestor[] BuildFakeThirdPartyServices()
         {
             var companyAServiceMock = Substitute.For<IApiClient>();
@@ -36,6 +45,24 @@ namespace UnitTests
 
             var companyBServiceMock = Substitute.For<IApiClient>();
             companyBServiceMock.PerformRequest(Arg.Any<string>()).Returns("{ 'amount': 17.58 }");
+
+            var companyCServiceMock = Substitute.For<IApiClient>();
+            companyCServiceMock.PerformRequest(Arg.Any<string>()).Returns(@"<?xml version=""1.0"" ?> <quote total=""50"" />");
+
+            return new IApiRequestor[] {
+                new ApiRequestorForCompanyA(apiClient: companyAServiceMock),
+                new ApiRequestorForCompanyB(apiClient: companyBServiceMock),
+                new ApiRequestorForCompanyC(apiClient: companyCServiceMock)
+            };
+        }
+
+        private IApiRequestor[] BuildFakeThirdPartyServicesWithWrongResultsBeingReturnedFromServices()
+        {
+            var companyAServiceMock = Substitute.For<IApiClient>();
+            companyAServiceMock.PerformRequest(Arg.Any<string>()).Returns("{ 'total': 30 }");
+
+            var companyBServiceMock = Substitute.For<IApiClient>();
+            companyBServiceMock.PerformRequest(Arg.Any<string>()).Returns("{ 'amount': abc }");
 
             var companyCServiceMock = Substitute.For<IApiClient>();
             companyCServiceMock.PerformRequest(Arg.Any<string>()).Returns(@"<?xml version=""1.0"" ?> <quote total=""50"" />");
