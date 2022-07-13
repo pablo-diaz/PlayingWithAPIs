@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.IO;
+using System.Xml;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,7 +44,7 @@ namespace ApiConsumer
             requestNode.AppendChild(BuildPackagesNode(
                 withCartonDimensions: basedOnInfo.CartonDimensions.ToArray(), basedOnXmlDocument: xmlDocument));
 
-            return xmlDocument.ToString();
+            return GetXMLString(xmlDocument);
         }
 
         private XmlNode BuildNode(string nodeName, string withAttributeName,
@@ -67,14 +68,25 @@ namespace ApiConsumer
 
                 var heightAttributeNode = basedOnXmlDocument.CreateAttribute(name: "height");
                 heightAttributeNode.Value = cartonDimension.Height.ToString();
-                cartonNode.AppendChild(heightAttributeNode);
+                cartonNode.Attributes.Append(heightAttributeNode);
 
                 var widthAttributeNode = basedOnXmlDocument.CreateAttribute(name: "width");
                 widthAttributeNode.Value = cartonDimension.Width.ToString();
-                cartonNode.AppendChild(widthAttributeNode);
+                cartonNode.Attributes.Append(widthAttributeNode);
             }
 
             return packagesNode;
+        }
+
+        private string GetXMLString(XmlDocument fromXmlDocument)
+        {
+            using (var stringWriter = new StringWriter())
+            using (var xmlTextWriter = XmlWriter.Create(stringWriter))
+            {
+                fromXmlDocument.WriteTo(xmlTextWriter);
+                xmlTextWriter.Flush();
+                return stringWriter.GetStringBuilder().ToString();
+            }
         }
     }
 }

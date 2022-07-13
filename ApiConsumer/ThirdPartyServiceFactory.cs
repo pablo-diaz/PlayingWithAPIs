@@ -15,11 +15,11 @@
                     baseURL: this._servicesConfiguration.CompanyAService.BaseUrl,
                     apiKey: this._servicesConfiguration.CompanyAService.apiKey)),
 
-                new ApiRequestorForCompanyA(apiClient: new ApiClientForCompanyB(
+                new ApiRequestorForCompanyB(apiClient: new ApiClientForCompanyB(
                     baseURL: this._servicesConfiguration.CompanyBService.BaseUrl,
                     apiKey: this._servicesConfiguration.CompanyBService.apiKey)),
 
-                new ApiRequestorForCompanyA(apiClient: new ApiClientForCompanyC(
+                new ApiRequestorForCompanyC(apiClient: new ApiClientForCompanyC(
                     baseURL: this._servicesConfiguration.CompanyCService.BaseUrl,
                     apiKey: this._servicesConfiguration.CompanyCService.apiKey))
             };
