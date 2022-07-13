@@ -4,8 +4,8 @@ using CSharpFunctionalExtensions;
 
 namespace ApiConsumer
 {
-    public interface IApiClient
+    public interface IApiRequestor
     {
-        Task<Result<string>> PerformRequest(string withBody);
+        Task<Result<decimal>> Request(RequestInfo forInfo);
     }
 }
