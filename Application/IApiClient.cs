@@ -2,7 +2,7 @@
 
 using CSharpFunctionalExtensions;
 
-namespace ApiConsumer
+namespace Application
 {
     public interface IApiClient
     {

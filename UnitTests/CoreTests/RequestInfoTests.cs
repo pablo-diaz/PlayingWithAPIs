@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 
-using ApiConsumer;
+using Core;
 
 using FluentAssertions;
 
 using NUnit.Framework;
 
-namespace UnitTests
+namespace UnitTests.CoreTests
 {
     public class RequestInfoTests
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 
-using ApiConsumer;
+using Core;
 
 using FluentAssertions;
 
 using NUnit.Framework;
 
-namespace UnitTests
+namespace UnitTests.CoreTests
 {
     public class CartonDimensionTests
     {

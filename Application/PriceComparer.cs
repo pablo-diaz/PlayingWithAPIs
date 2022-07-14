@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
+using Core;
+
 using CSharpFunctionalExtensions;
 
-namespace ApiConsumer
+namespace Application
 {
     public sealed class PriceComparer
     {

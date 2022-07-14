@@ -2,7 +2,7 @@
 
 using CSharpFunctionalExtensions;
 
-namespace ApiConsumer
+namespace Core
 {
     public sealed class Address: ValueObject
     {

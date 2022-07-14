@@ -1,8 +1,10 @@
 ﻿using System.Threading.Tasks;
 
+using Core;
+
 using CSharpFunctionalExtensions;
 
-namespace ApiConsumer
+namespace Application
 {
     public interface IApiRequestor
     {

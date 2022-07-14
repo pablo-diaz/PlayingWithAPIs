@@ -2,28 +2,28 @@
 
 using Newtonsoft.Json;
 
-namespace ApiConsumer
+namespace Core
 {
-    public sealed class ApiResponseParserForCompanyB
+    public sealed class ApiResponseParserForCompanyA
     {
         private class ResponseDTO
         {
-            [JsonProperty("amount")]
-            public decimal? Amount { get; set; }
+            [JsonProperty("total")]
+            public decimal? Total { get; set; }
         }
 
         public Result<decimal> Parse(string apiResponse)
         {
-            if(string.IsNullOrEmpty(apiResponse))
+            if (string.IsNullOrEmpty(apiResponse))
                 return Result.Failure<decimal>("API response was not provided");
 
             try
             {
                 var result = JsonConvert.DeserializeObject<ResponseDTO>(apiResponse);
-                if (!result.Amount.HasValue)
+                if(!result.Total.HasValue)
                     return Result.Failure<decimal>("API response did not come with the expected format");
 
-                return result.Amount.Value;
+                return result.Total.Value;
             }
             catch (JsonReaderException)
             {

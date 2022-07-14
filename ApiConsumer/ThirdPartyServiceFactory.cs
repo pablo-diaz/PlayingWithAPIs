@@ -1,4 +1,7 @@
-﻿namespace ApiConsumer
+﻿using Application;
+using Infrastrcuture;
+
+namespace ApiConsumer
 {
     public sealed class ThirdPartyServiceFactory
     {

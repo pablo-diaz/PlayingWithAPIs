@@ -1,12 +1,14 @@
 ﻿using System.Threading.Tasks;
 
+using Application;
+
 using CSharpFunctionalExtensions;
 
 using Flurl;
 using Flurl.Http;
 using Flurl.Http.Xml;
 
-namespace ApiConsumer
+namespace Infrastrcuture
 {
     public sealed class ApiClientForCompanyC: IApiClient
     {

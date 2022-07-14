@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using Core;
+using Application;
+
 namespace ApiConsumer
 {
     public class Program

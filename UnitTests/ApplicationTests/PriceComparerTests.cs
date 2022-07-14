@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using ApiConsumer;
+using Core;
+using Application;
 
 using FluentAssertions;
 
@@ -9,7 +10,7 @@ using NUnit.Framework;
 
 using NSubstitute;
 
-namespace UnitTests
+namespace UnitTests.ApplicationTests
 {
     public class PriceComparerTests
     {
@@ -32,11 +33,15 @@ namespace UnitTests
         [Test]
         public async Task Test_WhenComparingPrices_IfSomeServiceDoesNotReturnTheRequiredResponse_ItFails()
         {
-            var priceComparerService = new PriceComparer(thirdPartyServices: BuildFakeThirdPartyServicesWithWrongResultsBeingReturnedFromServices());
+            var priceComparerService = new PriceComparer(thirdPartyServices:
+                BuildFakeThirdPartyServicesWithWrongResultsBeingReturnedFromServices());
+
             var bestPriceResult = await priceComparerService.GetBestPrice(forRequest: BuildSampleRequestInfo());
 
             bestPriceResult.IsFailure.Should().BeTrue();
         }
+
+        #region Helpers
 
         private IApiRequestor[] BuildFakeThirdPartyServices()
         {
@@ -62,7 +67,7 @@ namespace UnitTests
             companyAServiceMock.PerformRequest(Arg.Any<string>()).Returns("{ 'total': 30 }");
 
             var companyBServiceMock = Substitute.For<IApiClient>();
-            companyBServiceMock.PerformRequest(Arg.Any<string>()).Returns("{ 'amount': abc }");
+            companyBServiceMock.PerformRequest(Arg.Any<string>()).Returns("{ 'amount': abc }");  // this service returns response with no standard, thus parsing it should fail
 
             var companyCServiceMock = Substitute.For<IApiClient>();
             companyCServiceMock.PerformRequest(Arg.Any<string>()).Returns(@"<?xml version=""1.0"" ?> <quote total=""50"" />");
@@ -82,5 +87,7 @@ namespace UnitTests
                     CartonDimension.Create(height: 15M, width: 25M).Value,
                     CartonDimension.Create(height: 10M, width: 36.59M).Value
                 }).Value;
+
+        #endregion
     }
 }
